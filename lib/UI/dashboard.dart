@@ -1,11 +1,15 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import './Login/signup.dart';
-import './Login/signin.dart';
-import 'UI/gender_stats.dart';
-import 'UI/coding_stats.dart';
-import 'UI/find_mentor.dart';
-import 'UI/profile.dart';
+import 'package:peer_learning/UI/chat_forrum.dart';
+import 'signup.dart';
+import 'signin.dart';
+import 'gender_stats.dart';
+import 'coding_stats.dart';
+import 'find_mentor.dart';
+import 'profile.dart';
+
+FirebaseUser loggedUser;
 
 class Dashboard extends StatefulWidget {
   final String username;
@@ -15,6 +19,26 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    getRegisteredUser();
+    super.initState();
+  }
+
+  void getRegisteredUser() async {
+    try {
+      final newUser = await _auth.currentUser();
+      if (newUser != null) {
+        loggedUser = newUser;
+        print(loggedUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   var _selectedIndex = 0;
   final _pageController = PageController();
 
@@ -33,41 +57,44 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async => true,
+      child: Scaffold(
 //      bottomNavigationBar: allDestinations,
-      body: new Center(
-        child: _getWidget(),
-      ),
-      bottomNavigationBar: BottomNavyBar(
-        selectedIndex: _selectedIndex,
-        showElevation: true, // use this to remove appBar's elevation
-        onItemSelected: (index) => setState(() {
-          _selectedIndex = index;
+        body: new Center(
+          child: _getWidget(),
+        ),
+        bottomNavigationBar: BottomNavyBar(
+          selectedIndex: _selectedIndex,
+          showElevation: true, // use this to remove appBar's elevation
+          onItemSelected: (index) => setState(() {
+            _selectedIndex = index;
 
-          //  _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
-        }),
-        items: [
-          BottomNavyBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Find Mentor'),
-            activeColor: Colors.red,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.people),
-            title: Text('Gender Stats'),
-            activeColor: Colors.purpleAccent,
-          ),
-          BottomNavyBarItem(
-              icon: Icon(Icons.code),
-              title: Text('Coding Stats'),
-              activeColor: Colors.pink),
-          BottomNavyBarItem(
-              icon: Icon(Icons.gps_fixed),
-              title: Text('Profile'),
-              activeColor: Colors.blue),
-        ],
+            //  _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
+          }),
+          items: [
+            BottomNavyBarItem(
+              icon: Icon(Icons.person),
+              title: Text('Chat Area'),
+              activeColor: Colors.red,
+            ),
+            BottomNavyBarItem(
+              icon: Icon(Icons.people),
+              title: Text('Gender Stats'),
+              activeColor: Colors.purpleAccent,
+            ),
+            BottomNavyBarItem(
+                icon: Icon(Icons.code),
+                title: Text('Coding Stats'),
+                activeColor: Colors.pink),
+            BottomNavyBarItem(
+                icon: Icon(Icons.gps_fixed),
+                title: Text('Profile'),
+                activeColor: Colors.blue),
+          ],
+        ),
+        resizeToAvoidBottomInset: false,
       ),
-      resizeToAvoidBottomInset: false,
     );
   }
 
@@ -75,7 +102,7 @@ class _DashboardState extends State<Dashboard> {
     switch (_selectedIndex) {
       case 0:
         return Container(
-          child: FindMentor(),
+          child: ChatForrum(),
         );
         break;
       case 1:
