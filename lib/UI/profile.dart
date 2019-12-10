@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
+import 'package:peer_learning/UI/signin.dart';
+
 class Profile extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -131,7 +133,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ],
-
               ),
             ))
       ],
