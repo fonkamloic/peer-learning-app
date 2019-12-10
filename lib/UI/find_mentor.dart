@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:loader_search_bar/loader_search_bar.dart';
+import 'package:peer_learning/UI/chat_forrum.dart';
 import 'package:peer_learning/components/mentorProfileCard.dart';
 
-import '../dashboard.dart';
+import 'dashboard.dart';
 
 class FindMentor extends StatefulWidget {
   @override
@@ -49,7 +50,7 @@ class FindMentorState extends State<FindMentor> {
 //          List<Item> _getItemListForQuery(String query) { ... }
 //          Widget _buildItemWidget(Item item) { ... }
       ),
-      
+
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -131,7 +132,7 @@ class FindMentorState extends State<FindMentor> {
                   RaisedButton(
                     onPressed: () {
                       setState(() {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => Dashboard(),
@@ -147,7 +148,6 @@ class FindMentorState extends State<FindMentor> {
                 ],
               ),
             ],
-
           ),
         ),
       ),
