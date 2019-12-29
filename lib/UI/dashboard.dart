@@ -2,10 +2,10 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import './Login/signup.dart';
 import './Login/signin.dart';
-import './screens/gender_stats.dart';
-import './screens/coding_stats.dart';
-import './screens/find_mentor.dart';
-import './screens/profile.dart';
+import 'UI/gender_stats.dart';
+import 'UI/coding_stats.dart';
+import 'UI/find_mentor.dart';
+import 'UI/profile.dart';
 
 class Dashboard extends StatefulWidget {
   final String username;
